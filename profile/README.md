@@ -84,7 +84,6 @@ No infra? Sign up for our Hosted plan at [https://app.rocketadmin.com](https://a
 ## 💬 Community & Support
 
 * **GitHub Issues** – bug reports & feature requests
-* **Discord** – [https://discord.gg/rocketadmin](https://discord.gg/rocketadmin)
 * **Email** – [support@rocketadmin.com](mailto:support@rocketadmin.com)
 
 ## 🛡️ Security
