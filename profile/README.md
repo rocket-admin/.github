@@ -23,7 +23,7 @@ Rocket Admin gives your team a secure visual interface on top of your databasesâ
 
 | Repository                                                               | Description                                                                                     |
 | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [`rocketadmin`](https://github.com/rocket-admin/rocketadmin)             | Core application (TypeScript, NestJS + Vue).                                                    |
+| [`rocketadmin`](https://github.com/rocket-admin/rocketadmin)             | Core application (TypeScript, NestJS + Angular).                                                |
 | [`helm-chart`](https://github.com/rocket-admin/helm-chart)               | Helm chart to run Rocket Admin on Kubernetes.                                                   |
 | [`rocketadmin-agent`](https://github.com/rocket-admin/rocketadmin-agent) | Lightweight Docker agent that connects to remote databases (archived â€“ use core image instead). |
 | [`rocketadmin-cli`](https://github.com/rocket-admin/rocketadmin-cli)     | Experimental CLI generator (archived).                                                          |
@@ -37,15 +37,30 @@ Rocket Admin gives your team a secure visual interface on top of your databasesâ
 
 ```bash
 docker pull rocketadmin/rocketadmin
+# or
+podman pull quay.io/rocketadmin/rocketadmin
+
 docker run -p 8080:8080 \
   -e DATABASE_URL="postgresql://user:pass@db/rocketadmin?ssl_mode=require" \
   -e JWT_SECRET="$(openssl rand -hex 32)" \
   -e PRIVATE_KEY="$(openssl rand -hex 32)" \
+  -e TEMPORARY_JWT_SECRET="$(openssl rand -hex 32)" \
   rocketadmin/rocketadmin
 ```
 
-Open [http://localhost:8080](http://localhost:8080) and log in with the credentials printed to the container logs.
-For all environment variables see the [image README](https://github.com/rocket-admin/rocketadmin#environment-variables).
+Open [http://localhost:8080](http://localhost:8080) and log in with the credentials printed to the container logs (`Admin user created with email: "admin@email.local" and password: "<password>"`).
+
+**Key environment variables:**
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` or `PGLITE_FOLDER_PATH` | Internal Rocketadmin database connection (`postgresql://user:pass@host/db`) or PGLite folder path |
+| `JWT_SECRET` | Secret key for signing JWT tokens (64+ chars) |
+| `PRIVATE_KEY` | Key for encrypting database credentials (64+ chars) |
+| `TEMPORARY_JWT_SECRET` | Secondary JWT key for temporary tokens |
+| `APP_DOMAIN_ADDRESS` | Your deployment URL (for links/emails) |
+| `OPENAI_API_KEY` | Optional: enables AI insights |
+
+For all environment variables see the [image README](https://github.com/rocket-admin/rocketadmin#enviroment-variables).
 
 ### Kubernetes / Helm
 
